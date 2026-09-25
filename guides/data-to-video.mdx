@@ -1,0 +1,95 @@
+---
+title: "Data to video"
+description: "Everything POST /v1/videos/from-data accepts, and what each field does to the video."
+---
+
+`from-data` is one call that reads your data into a source pack, writes a script (or takes yours), records the voice, places visuals, and renders in the background.
+
+## Three ways to feed it
+
+<Tabs>
+  <Tab title="Snapshot">
+    Send `data`. Every key becomes a quotable fact; nothing else can be invented. Numeric keys whose names contain `usd`, `price`, `cap`, `volume` or `liquidity` are formatted as money, keys containing `pct` or `percent` as percentages, everything else with thousands separators. Arrays are walked (up to 60 facts). Any item with an `imageUrl`, `iconUrl`, `image`, `icon`, `logo` or `thumbnail` URL becomes a still, in order, after the top-level `imageUrl`.
+
+    ```json
+    { "data": { "symbol": "AI", "priceUsd": 0.22, "change24hPct": -8.7, "holders": 52772,
+                "topHolders": [ { "wallet": "0xab…", "pctOfSupply": 4.1, "iconUrl": "https://…" } ] },
+      "title": "Artificial Inu ($AI)", "brief": "…", "cta": "…" }
+    ```
+  </Tab>
+  <Tab title="Brief only">
+    Omit `data`. Send `brief` (and optionally `sourceUrl` to ground on a page). The director is told it is a creative piece and adds no statistics or prices unless they are in the brief.
+  </Tab>
+  <Tab title="Your script">
+    Send `script` with scenes. The director is skipped entirely: no 150-second model call, no invented copy, exact control of every scene. See [Authored scripts](/guides/authored-scripts). `data` can still carry `imageUrl` and logo arrays for stills.
+  </Tab>
+</Tabs>
+
+## Fields
+
+| Field | Type | Effect |
+|---|---|---|
+| `data` | object | Facts and stills, see above |
+| `title` | string | The video title. Always wins over a scraped page title |
+| `brief` | string | Angle, audience, CTA in plain words. Keep under 600 characters when the director writes the script |
+| `cta` | string | Spoken and shown verbatim as the last scene |
+| `script` | object | Your own scenes. Skips the director |
+| `imageUrl` | string | Opening still (logo, hero) |
+| `sourceUrl` | string | A page to read for grounding when there is no `data` |
+| `format` | `9:16` `16:9` `1:1` `4:5` | Default `9:16` |
+| `targetSeconds` | number | Runtime. Cost scales: script per minute, voice per 30 s, render per minute. Under 3 s is silent |
+| `images` | `source` `none` `auto` `generate` | `source` = real stills only (default with data); `auto` = stills first, generate where nothing real exists (25 each); `generate` = a generated image on every visual scene; `none` = typography and data scenes only |
+| `brand` | object | See [Brand and packs](/concepts/brand-and-packs) |
+| `voiceId` | string | ElevenLabs voice id. `list_voices` returns the house voices and your clones |
+| `language` | string | Narration and on-screen language, e.g. `"Spanish"`, `"zh-CN"` |
+| `voiceover` | boolean | `false` = silent piece |
+| `captions` | boolean | Default true with a voiceover |
+| `pacing` | `calm` `standard` `fast` | Scene density |
+| `clips` | object | `{ provider, count, seconds }`: AI clips on scenes that carry `clipPrompt`, billed per second. Image-to-video from the scene's still when it has one |
+| `aiVideo` | object | `{ provider, withAudio }`: one generated shot for the whole runtime. Quote first |
+| `avatar` | object | `{ mode: "stock" \| "photo", avatarId, imageAssetId }`: a lip-synced presenter |
+| `layout` | `full` `split` | `split` = presenter in the bottom third, scenes above |
+| `libraryAssetIds` | string[] | Your library files to place |
+| `musicAssetId` | string | A library audio file as the bed |
+| `music` | object | `{ mood, bpm, generate: true, seconds }`: generate a bed (40 credits) and use it |
+| `public` | boolean | Files playable without a key |
+| `channelId` `showId` `seriesId` | string | File it as an episode. Applies show defaults and brand lock |
+| `external_id` | string | Echoed on the response and every webhook |
+| `render` | boolean | `false` stops after the script (then attach assets, then `POST /videos/{id}/render`) |
+| `async` | boolean | `true` returns a job id at once. See [Async jobs](/guides/async-jobs) |
+
+## Response
+
+`202` with the [video object](/concepts/videos-and-statuses) in status `rendering`, plus `sourcePackId`, `external_id` and the keyed media fields. With `render: false`, `200` and status `scripted`. With `async: true`, `202` with a `jobId`.
+
+## Timing
+
+| Path | Typical time to `rendered` |
+|---|---|
+| Your script, no clips | 30 to 60 s |
+| Director writes the script | 60 to 120 s (director call is capped at 150 s; long briefs and `pacing: "fast"` push it) |
+| Any `clips` | 2 to 5 minutes |
+| `aiVideo` | 3 to 8 minutes |
+
+Use `async: true` for anything with clips or AI video, and always when your own edge has a request timeout.
+
+## Worked example: a listing video with a logo-seeded clip
+
+```bash
+curl -X POST https://api.monkeygun.com/v1/videos/from-data \
+  -H "Authorization: Bearer $MK_KEY" -H "Content-Type: application/json" \
+  -d '{
+    "title": "$AI just listed",
+    "brief": "30 seconds for traders scrolling the app. Lead with the price move, name the holder count, end on the CTA.",
+    "cta": "Trade $AI on yourexchange.com",
+    "data": { "symbol": "AI", "name": "Artificial Inu", "priceUsd": 0.22, "change24hPct": 41.2, "volume24hUsd": 1200000, "holders": 52772 },
+    "imageUrl": "https://assets.coingecko.com/coins/images/1/large/bitcoin.png",
+    "images": "source",
+    "clips": { "provider": "kling", "count": 1, "seconds": 5 },
+    "brand": { "pack": "bold", "accent": "#C7F24C", "ground": "#0B0C0F", "watermark": "yourexchange.com" },
+    "public": true, "async": true, "external_id": "listing-AI"
+  }'
+# 202 { "jobId": "job-…", "status": "creating", "poll": "/v1/jobs/job-…" }
+```
+
+The director puts `clipPrompt` on the hook scene; because that scene's still is the logo, the clip is image-to-video from it. Logos under 300 px are scaled onto a full-frame canvas in your format before generation, so small exchange icons work.

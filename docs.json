@@ -1,0 +1,44 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Monkeygun",
+  "description": "Data in, videos out. The video engine for exchanges, protocols and data companies.",
+  "colors": { "primary": "#6E8F0A", "light": "#C7F24C", "dark": "#0B0C0F" },
+  "logo": { "light": "/images/logo-dark.png", "dark": "/images/logo-light.png", "href": "https://monkeygun.com" },
+  "favicon": "/images/favicon.png",
+  "background": { "color": { "light": "#F7F6F2", "dark": "#0B0C0F" } },
+  "navbar": {
+    "links": [
+      { "label": "Studio", "href": "https://monkeygun.com/app" },
+      { "label": "Pricing", "href": "https://monkeygun.com/pricing" }
+    ],
+    "primary": { "type": "button", "label": "Get an API key", "href": "https://monkeygun.com/login?next=/app/settings" }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          { "group": "Start here", "pages": ["introduction", "quickstart", "packages"] },
+          { "group": "Concepts", "pages": ["concepts/videos-and-statuses", "concepts/media-and-keys", "concepts/credits-and-quotes", "concepts/brand-and-packs", "concepts/channels-shows-kits"] },
+          { "group": "Guides", "pages": ["guides/data-to-video", "guides/webhooks-and-polling", "guides/async-jobs", "guides/authored-scripts", "guides/embedded-studio", "guides/upload-and-brand-pass", "guides/scheduled-shows"] },
+          { "group": "Data schemas", "pages": ["schemas/overview", "schemas/token-snapshot", "schemas/pool-snapshot", "schemas/wallet-snapshot", "schemas/flow-snapshot"] },
+          { "group": "Examples", "pages": ["examples/tokenslop", "examples/nansen-shows"] },
+          { "group": "Reference", "pages": ["errors", "limits", "changelog"] }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "openapi": "openapi.json"
+      }
+    ]
+  },
+  "footer": {
+    "socials": { "x": "https://x.com/monkeygun", "github": "https://github.com/arambarnett/nansen-shows" }
+  },
+  "api": {
+    "baseUrl": "https://api.monkeygun.com/v1",
+    "auth": { "method": "bearer" },
+    "playground": { "display": "interactive" }
+  }
+}
