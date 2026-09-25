@@ -19,6 +19,7 @@ description: "A live exchange-style feed on Robinhood Chain built entirely on th
     2. tokenslop debits its own "slop credits" (Monkeygun cost × 1.5) and creates an order.
     3. `from-data` in the background with the token's [TokenSnapshot](/schemas/token-snapshot), the tier's `showId`, `external_id: <orderId>`, and tier extras (`images: "generate"` for Hero, `aiVideo: { provider: "minimax" }` for AI Video, `aiVideo: { provider: "seedance-pro", withAudio: true }` for Cinematic).
     4. The webhook attaches the video to the order by `external_id`; `video.render_failed` refunds. Orders with no video after ten minutes are failed and refunded by a sweep.
+    5. The paid Smart Money report uses the authored-script pipeline instead of the director: the same payload as the house shows, the order id as `external_id`, the buyer as the creator. It sells for $3.00 on a $2.00 cost (60 credits plus a 5-second clip and a generated bed).
   </Accordion>
   <Accordion title="Creator studio">
     1. Wallet signs; tokenslop's backend calls `POST /v1/embed/token { externalUserId: <wallet>, origin, channelId: "tokenslop", ttlSeconds: 3600 }`.
