@@ -5,22 +5,20 @@ version: 1
 site:
   title: Monkeygun
   structure:
-    # All documentation lives in one tree at the repository root:
-    #   introduction, quickstart, packages, errors, limits, changelog (root pages)
-    #   concepts/, guides/, schemas/, use-cases/, examples/ (subdirectories)
-    # One space keeps the cross-links between those folders intact.
-    - type: space
-      key: documentation
+    # One section, one space: the whole documentation tree lives at the repository root
+    # (README.md + SUMMARY.md). The API reference pages (api-reference/*.md, OpenAPI
+    # blocks over openapi.json) are part of the same space via SUMMARY.md.
+    - type: section
+      key: docs
       title: Documentation
       path: docs
       default: true
-      content:
-        directory: .
-        language: en
-    # The API reference is generated from the OpenAPI document (openapi.json at the
-    # repository root, mirrored live at this URL). Configure it in GitBook as an
-    # OpenAPI spec; this link keeps it reachable from the site navigation meanwhile.
-    - type: external-link
-      key: api-reference
-      title: API reference (OpenAPI)
-      url: https://api.monkeygun.com/v1/openapi.json
+      children:
+        - type: space
+          key: documentation
+          title: Documentation
+          path: documentation
+          default: true
+          content:
+            directory: .
+            language: en

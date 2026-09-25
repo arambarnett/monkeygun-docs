@@ -3,7 +3,7 @@
  "info": {
   "title": "Monkeygun API",
   "version": "3.1.0",
-  "description": "Data in, videos out. Every tool the Monkeygun studio has, over HTTP. Quote before you spend; paid calls return `charged`. 1 credit = $0.01. Docs: https://monkeygunapi.mintlify.app \u00b7 MCP: npx @monkeygun/mcp"
+  "description": "Data in, videos out. Every tool the Monkeygun studio has, over HTTP. Quote before you spend; paid calls return `charged`. 1 credit = $0.01. Docs: https://monkey-gun.gitbook.io/monkeygun \u00b7 MCP: npx @monkeygun/mcp"
  },
  "servers": [
   {
