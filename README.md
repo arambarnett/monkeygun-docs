@@ -6,6 +6,7 @@ Monkeygun turns structured data into short vertical videos. Every number on scre
 
 * [**Quickstart**](quickstart.md) — A token snapshot to a playable MP4 in one call, in under ten minutes.
 * [**Packages**](packages.md) — Video API, Feed + Creator Studio, Data Shows, and the show kit catalog.
+* [**For exchanges**](for-exchanges.md) — the one-page brief for growth and product leads: what users see, what it takes, how a pilot runs.
 * [**Authored scripts**](guides/authored-scripts.md) — Write the scenes yourself: charts, stat cards, clips from a logo, Giphy loops, sound design, transitions.
 * [**Embedded studio**](guides/embedded-studio.md) — Put the full studio inside your app so your users create videos on your data.
 

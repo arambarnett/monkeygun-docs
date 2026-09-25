@@ -6,6 +6,7 @@
 
 * [Quickstart](quickstart.md)
 * [Packages](packages.md)
+* [For exchanges](for-exchanges.md)
 
 ## Concepts
 
