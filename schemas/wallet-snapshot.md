@@ -1,0 +1,37 @@
+# WalletSnapshot
+
+One wallet or portfolio: holdings, PnL, best and worst mover. The shape behind Bag Check, Wallet Watch and Whale Alert.
+
+```json
+{
+  "wallet": "0x9f3c…",
+  "walletLabel": "@soggychad85",
+  "walletUrl": "https://…",
+  "totalUsd": 10539,
+  "positions": 7,
+  "pnl7dUsd": -2140,
+  "pnl7dPct": -16.9,
+  "holdings": [
+    { "symbol": "ANTHROPIG", "name": "Anthropig", "valueUsd": 9900, "pctOfBag": 94.0, "change24hPct": -31.0, "holders": 812, "iconUrl": "https://…" },
+    { "symbol": "AI", "name": "Artificial Inu", "valueUsd": 420, "pctOfBag": 4.0, "change24hPct": 12.5, "iconUrl": "https://…" }
+  ],
+  "bestMover": { "symbol": "AI", "change24hPct": 12.5 },
+  "worstMover": { "symbol": "ANTHROPIG", "change24hPct": -31.0 },
+  "notableTrades": [
+    { "side": "buy", "symbol": "ANTHROPIG", "valueUsd": 8200, "at": "2026-09-23T14:02:00Z" }
+  ],
+  "asOf": "2026-09-25T00:00:00Z"
+}
+```
+
+| Key | Use |
+|---|---|
+| `walletLabel` | Handle shown and spoken instead of the address |
+| `totalUsd`, `positions` | The scoreboard |
+| `holdings[]` | Each with `pctOfBag` for "94% of the bag is one token" lines; `iconUrl` gives a still per holding |
+| `bestMover`, `worstMover` | The turn of the story |
+| `notableTrades[]` | Receipts for a whale alert |
+
+Privacy: send handles the user has chosen to show. Addresses are quotable facts like any other; if you do not want the address spoken, leave it out and keep `walletUrl` for the share page.
+
+<figure><img src="https://api.monkeygun.com/api/media/videos/vid-292/vid-292-thumb.jpg" alt="Wallet Watch"><figcaption><p>Wallet Watch, a tokenslop show from this shape (vid-292).</p></figcaption></figure>

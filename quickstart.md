@@ -1,0 +1,94 @@
+# Quickstart
+
+From a token snapshot to a playable video in one call.
+
+{% stepper %}
+{% step %}
+### Get a key
+Sign in at [monkeygun.com](https://monkeygun.com/login), open **Settings → Developer**, and create a key. It looks like `mk_live_…` and is shown once. New accounts start with 500 credits, enough for about eight plain 30-second videos.
+
+```bash
+export MK_KEY=mk_live_…
+curl https://api.monkeygun.com/v1/account -H "Authorization: Bearer $MK_KEY"
+# { "signedIn": true, "credits": 500 }
+```
+{% endstep %}
+
+{% step %}
+### Price it (free)
+```bash
+curl -X POST https://api.monkeygun.com/v1/quote \
+  -H "Authorization: Bearer $MK_KEY" -H "Content-Type: application/json" \
+  -d '{ "targetSeconds": 30, "images": "none" }'
+# { "credits": 60, "usd": "0.60", "breakdown": [ script 20, voiceover 30, render 10 ] }
+```
+
+A quote is the floor for the options you named. Generated images, AI clips, a music bed and show defaults add to it. See [Credits and quotes](concepts/credits-and-quotes.md).
+{% endstep %}
+
+{% step %}
+### Post your data
+Every key in `data` becomes a fact the narrator can quote. Numbers are formatted for speech. `cta` is spoken and shown verbatim as the last scene. `external_id` comes back on every webhook.
+
+```bash
+curl -X POST https://api.monkeygun.com/v1/videos/from-data \
+  -H "Authorization: Bearer $MK_KEY" -H "Content-Type: application/json" \
+  -d '{
+    "title": "Artificial Inu ($AI)",
+    "brief": "A 30-second recap of today for people scrolling the exchange. Lead with the move, end on the CTA.",
+    "cta": "Trade $AI on yourexchange.com",
+    "data": {
+      "symbol": "AI", "name": "Artificial Inu",
+      "priceUsd": 0.22, "change24hPct": -8.7,
+      "volume24hUsd": 1200000, "marketCapUsd": 223000000, "holders": 52772,
+      "imageUrl": "https://assets.coingecko.com/coins/images/1/large/bitcoin.png"
+    },
+    "format": "9:16", "targetSeconds": 30, "images": "source",
+    "brand": { "pack": "bold", "accent": "#C7F24C", "ground": "#0B0C0F", "watermark": "yourexchange.com" },
+    "public": true,
+    "external_id": "listing-AI-2026-09-25"
+  }'
+```
+
+```json
+HTTP 202
+{
+  "videoId": "vid-391", "status": "rendering", "title": "Artificial Inu ($AI)",
+  "duration": 29.4, "charged": 60, "external_id": "listing-AI-2026-09-25",
+  "mediaKey": "cb66…", "url": "https://api.monkeygun.com/api/media/videos/vid-391/vid-391.mp4?k=cb66…",
+  "renderUrl": null, "thumbnail": null, "watchUrl": "https://monkeygun.com/w/vid-391?k=cb66…",
+  "note": "Rendering. You will receive video.rendered on your webhook; or poll GET /v1/videos/{id}."
+}
+```
+{% endstep %}
+
+{% step %}
+### Get the file
+Rendering takes 30 to 60 seconds for a plain video. Poll until `status` is `rendered`, then play `renderUrl`.
+
+```bash
+curl https://api.monkeygun.com/v1/videos/vid-391 -H "Authorization: Bearer $MK_KEY"
+# { "status": "rendered", "renderUrl": "https://api.monkeygun.com/api/media/videos/vid-391/vid-391-v1.mp4?k=cb66…", ... }
+```
+
+`renderUrl` is immutable and cacheable forever. `url` is the current cut and changes after an edit. Both carry the media key, so they play without a session. Set `public: true` (as above) if you want the bare path to play too. See [Media and keys](concepts/media-and-keys.md).
+{% endstep %}
+
+{% step %}
+### Stop polling: add a webhook
+```bash
+curl -X POST https://api.monkeygun.com/v1/webhooks \
+  -H "Authorization: Bearer $MK_KEY" -H "Content-Type: application/json" \
+  -d '{ "url": "https://yourapp.com/monkeygun", "events": ["video.rendered", "video.render_failed"] }'
+# { "webhook": { "id": "wh_b5fd", "secret": "whsec_…" } }   secret is shown once
+```
+
+The rendered event carries `renderUrl`, `url`, `thumbnail`, `watchUrl`, `mediaKey`, `external_id` and `version`. Verify `X-Monkeygun-Signature` before trusting it. Delivery is one attempt with no retry, so keep a short reconciler that polls anything still `rendering` after a minute. See [Webhooks and polling](guides/webhooks-and-polling.md).
+{% endstep %}
+{% endstepper %}
+
+## Next
+
+* [**Write the scenes yourself**](guides/authored-scripts.md) — Charts, stat cards, logo-seeded clips, sound design.
+* [**Long creations**](guides/async-jobs.md) — Clips and full AI video take minutes. Use `async: true`.
+* [**Your users make videos**](guides/embedded-studio.md) — Embed the studio with a per-user token.

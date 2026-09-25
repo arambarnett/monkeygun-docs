@@ -1,0 +1,24 @@
+# Data schemas
+
+Named snapshot shapes for crypto and financial data. Send one of these as `data` and the narration, stat cards and stills line up without prompt engineering.
+
+`from-data` accepts any JSON object. These four shapes are the ones the engine, the show kits and the examples are tuned for. Use the key names as written: money keys end in `Usd`, percentages in `Pct`, and image keys are `imageUrl` or `iconUrl`, so the fact formatter and the still picker do the right thing.
+
+| Schema | Buyer | Shows built on it |
+|---|---|---|
+| [TokenSnapshot](../schemas/token-snapshot.md) | Exchanges, launchpads, token pages | Movers Report, Spotlight, Roast My Bag, listing promos |
+| [PoolSnapshot](../schemas/pool-snapshot.md) | Yield protocols, DeFi aggregators | Rate Split, Beat Your Bank |
+| [WalletSnapshot](../schemas/wallet-snapshot.md) | Exchanges (portfolio), wallets, analytics | Bag Check, Wallet Watch, Whale Alert |
+| [FlowSnapshot](../schemas/flow-snapshot.md) | Data providers, on-chain intelligence | Smart Money Alert, Dumb vs Smart, Who Got Rich |
+
+Every value you send is quotable and nothing else is. If a field is null, leave it out rather than sending `null`; the narrator will not mention it.
+
+## Common fields
+
+| Key | Type | Notes |
+|---|---|---|
+| `asOf` | ISO string | Stamped on screen when the show's compliance rules ask for it |
+| `source` | string | Named in the CTA or disclaimer, e.g. "Data by Nansen" |
+| `imageUrl` (top level on the call) | URL | Opening still |
+| `iconUrl` / `imageUrl` on items | URL | One still per item, in order, after the opening still |
+| `url` | URL | Link shown on the share page |

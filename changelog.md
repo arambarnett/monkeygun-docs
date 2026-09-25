@@ -1,16 +1,14 @@
----
-title: "Changelog"
-description: "What changed in the API and the engine."
----
+# Changelog
 
-<Update label="2026-09-25" description="Developer docs, OpenAPI 3.1.0, 500 signup credits">
+What changed in the API and the engine.
+
+## 2026-09-25 — Developer docs, OpenAPI 3.1.0, 500 signup credits
 - These docs replace the in-app docs page.
 - OpenAPI now includes `/embed/token`, `/library/upload`, `/jobs/{id}`, `/webhooks/{id}/deliveries`, and `Video`, `Job`, `Media`, `WebhookEvent` and `VideoStatus` schemas.
 - Internal tools removed from the public catalog.
 - New accounts start with 500 credits.
-</Update>
 
-<Update label="2026-09-24" description="Authored-script quality">
+## 2026-09-24 — Authored-script quality
 - `scene.chart`: real line and bar charts drawn from your series.
 - `scene.asset.url`: a public image or mp4 fetched into the video at create time.
 - `scene.sfx`: bundled sound names, `none`, or a library sound per scene.
@@ -20,10 +18,8 @@ description: "What changed in the API and the engine."
 - Image-to-video seeds small or off-aspect stills on a full-frame canvas; token logos under 300 px now make clips.
 - Keyed absolute media links (`url`, `renderUrl`, `thumbnail`, `watchUrl`, `mediaKey`, `public`) on every video response and on jobs.
 - `public: true` per call. `musicAssetId` and `music.generate` per call on `from-data`.
-</Update>
 
-<Update label="2026-09-14" description="Plans, proofs, profiles">
+## 2026-09-14 — Plans, proofs, profiles
 - `plan` and `proof` tools; the studio shows a plan card for anything over 200 credits.
 - Account profile: brand kit, voices, audiences, CTAs remembered between sessions; `learn_brand` from a site.
 - Music-video workflow: whole-track runtime, lyric-driven imagery, no narration.
-</Update>

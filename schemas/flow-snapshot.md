@@ -1,0 +1,49 @@
+# FlowSnapshot
+
+Who is buying and who is selling, over a window, as a series. The shape behind the Nansen smart-money shows.
+
+```json
+{
+  "asOf": "2026-09-25T00:00:00Z",
+  "source": "Nansen",
+  "chains": ["robinhood", "base"],
+  "window": "7d",
+  "asset": { "symbol": "AI", "name": "Artificial Inu", "address": "0x2e8c…", "marketCapUsd": 223000000, "iconUrl": "https://…/ai.png" },
+  "cohorts": [
+    { "name": "fresh wallets", "netFlowUsd": 29100000, "netFlowSpoken": "twenty-nine million dollars" },
+    { "name": "smart traders", "netFlowUsd": -2100000, "netFlowSpoken": "two million dollars out" },
+    { "name": "exchanges", "netFlowUsd": 5100000 }
+  ],
+  "series": [
+    { "t": "Thu", "v": 103252 }, { "t": "Fri", "v": -42000 }, { "t": "Sat", "v": 88000 },
+    { "t": "Sun", "v": -3836436 }, { "t": "Mon", "v": 250000 }, { "t": "Tue", "v": 12000 }, { "t": "Wed", "v": 29000 }
+  ],
+  "smartMoneyBuying": [ { "symbol": "AI", "netFlow24h": 103252, "smartTraders30d": 41, "iconUrl": "https://…" } ],
+  "smartMoneySelling": [ { "symbol": "DELTA", "netFlow24h": -88000, "iconUrl": "https://…" } ]
+}
+```
+
+| Key | Use |
+|---|---|
+| `cohorts[]` | Who did what. `netFlowSpoken` controls the narration wording |
+| `series[]` | Drop straight into a `chart` scene as `chart.series` |
+| `smartMoneyBuying[]`, `smartMoneySelling[]` | Leaderboards for a movers-style show; each `iconUrl` is a still |
+| `asset.iconUrl` | Seed for a logo clip on the hook scene |
+
+## From snapshot to scenes
+
+The `series` array is exactly what a bar chart scene takes:
+
+```json
+{ "type": "chart", "text": "Nansen has the receipts", "duration": 6,
+  "chart": { "kind": "bars", "series": [ … the series above … ], "baseline": 0, "valueFormat": "usd", "title": "$AI · net flow · last 7 days" } }
+```
+
+and `cohorts` become a stat card:
+
+```json
+{ "type": "data", "text": "The scoreboard, 7 days", "duration": 5, "motion": "slam", "sfx": "impact",
+  "stats": [ { "value": "+$29.1M", "label": "fresh wallets" }, { "value": "−$2.1M", "label": "smart traders" }, { "value": "+$5.1M", "label": "exchanges" } ] }
+```
+
+The [nansen-shows](../examples/nansen-shows.md) repository builds seven shows from this shape.

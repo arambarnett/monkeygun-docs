@@ -1,0 +1,29 @@
+# Errors
+
+Every error is JSON with an error string. The HTTP status is derived from it.
+
+```json
+{ "error": "insufficient_credits: this needs 160 credits, wallet has 40 (short 120). Point them to /pricing to top up." }
+```
+
+| Status | When |
+|---|---|
+| `400` | Bad arguments. The `error` string says which |
+| `401` | Missing, revoked or wrong key. `{ "error": "unauthorized", "message": "Pass an API key…" }` |
+| `402` | `insufficient_credits: …` names the shortfall |
+| `404` | Unknown tool, video, job or asset; another account's job |
+| `413` | Upload over 250 MB |
+| `422` | Upload URL could not be fetched or had no media |
+
+Errors inside a creation that do not abort it (a clip that failed, an image that could not be fetched) are logged, the paid step is refunded, and the video renders without that element. `warnings` on the render response and the rendered webhook list quality-check findings.
+
+## Common causes
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `Video creation failed (The operation was aborted due to timeout)` | The director exceeded its 150 s cap on a long brief or fast pacing | Shorten the brief, use `pacing: "standard"`, or send your own `script` |
+| Media URL answers 401 | You used the relative `video` path, or the bare media path on a private video | Use `renderUrl` / `url`, or set `public: true` |
+| Clip scene came back as a still | Image-to-video rejected the seed | Fixed for small logos; for other images make sure they are at least 300 px |
+| Webhook never arrived | One attempt, no retry | Check `GET /v1/webhooks/{id}/deliveries`, run the reconciler |
+| Charge higher than the quote | Show defaults or `images: "auto"` generated images | Pass `images` explicitly, omit `showId` when you want the quote exactly |
+| Video has the wrong brand or a frame | `channelId` applied the channel lock | Omit `channelId`, or pass `brand` and omit `showId` |

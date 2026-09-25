@@ -1,0 +1,45 @@
+# Brand and style packs
+
+Colors, type, motion, sound and captions, per call or locked on a channel.
+
+Pass `brand` on any call that makes a video. Everything is optional; unset fields fall back to the source page's colors, then to the account's brand kit, then to the defaults.
+
+```json
+"brand": {
+  "pack": "bold",
+  "accent": "#C7F24C", "ground": "#0B0C0F", "ink": "#F4EFE6",
+  "displayFont": "DM Sans", "bodyFont": "DM Sans",
+  "watermark": "yourexchange.com",
+  "logo": "libraries/u/<scope>/files/<assetId>.png",
+  "disclaimer": "Not financial advice. Data as of render time.",
+  "captionStyle": "karaoke",
+  "sfx": true
+}
+```
+
+## Style packs
+
+A pack sets fonts, motion per scene type, grade, music mood and the sound-design profile in one word.
+
+| Pack | Look | Motion | Music | Sound design |
+|---|---|---|---|---|
+| `classic` | Clean sans, default | Kinetic titles, count-up data, slide visuals | Modern electronic, 104 bpm | Whoosh cuts, impact on stats, medium volume |
+| `editorial` | Serif, warm, slower | Slides, typewriter quotes | Warm piano and strings, 88 bpm | Quiet, riser on open |
+| `bold` | Condensed uppercase, hot accent | Kinetic everything, fast | Driving electronic, 128 bpm | Loud, impact on open and CTA |
+| `cinematic` | Letterbox on wide frames, filmic grade | Slow push-ins, zoom | Dark underscore, drones, 92 bpm | Riser on open, tick on CTA |
+
+## Captions
+
+`captionStyle: "karaoke"` shows one to three words at a time with the keyword lit (default). `"bar"` shows the phrase in a pill. `captions: false` on the call turns them off.
+
+## Watermark and logo
+
+`watermark` is text bottom-right. An empty string removes it. `logo` replaces it with an image from your library (upload it first, then use the path returned in the library listing).
+
+## Locking brand on a channel or show
+
+Set `brand` and `cta` on a channel (`update_channel`) and every video made with that `channelId` inherits them when the call sends no `brand` of its own. A show's `brandLock` goes further: it is merged over whatever the call sends, so a locked show is always an ad for its owner. If you want per-call brand on a channel with a lock, omit `showId`, or omit `channelId` entirely.
+
+{% hint style="info" %}
+Passing `channelId` also applies the channel's locked `frame` (header and footer) if one is set. To render with your own brand and no frame, do not pass `channelId`.
+{% endhint %}

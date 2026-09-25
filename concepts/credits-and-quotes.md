@@ -1,0 +1,62 @@
+# Credits and quotes
+
+What things cost, what a quote does and does not promise, and how to keep a video at the price you planned.
+
+One credit is one cent. New accounts start with 500. Every paid call returns `charged`. Failed paid steps are refunded.
+
+## Price list
+
+| Component | Credits |
+|---|---|
+| Script (per started minute of runtime) | 20 |
+| Voiceover (per started 30 s) | 30 |
+| Render (per started minute) | 10 |
+| Edit: words unchanged / changed | 20 / 50 |
+| Generated image | 25 |
+| AI clip, per second: MiniMax H3 / Kling 2.5 / Seedance Fast / Seedance 2.5 | 15 / 20 / 50 / 100 |
+| Presenter, per second: stock / your photo | 3 / 25 |
+| Generated music bed | 40 |
+| Generated sound effect | 5 |
+| Brand pass on an uploaded clip | 5 |
+| Still image (carousel or infographic slide) | 15 |
+| Footage indexing, per minute | 20 |
+| Voice clone (once) | 200 |
+| Web search / page read | 2 / 2 |
+| Running show, per source check | 1 (+5 via browser fetch) |
+| Reads, quotes, listing, structure, sharing, versions | free |
+
+A plain 30-second video with narration, captions and your stills is **60 credits**. Sixty seconds is 90. A 30-second video with one 5-second Kling clip and a generated music bed is 200.
+
+## Quote first
+
+```bash
+curl -X POST https://api.monkeygun.com/v1/quote -H "Authorization: Bearer $MK_KEY" \
+  -d '{ "targetSeconds": 30, "images": "generate", "clips": { "provider": "kling", "count": 1, "seconds": 5 } }'
+# { "credits": 260, "usd": "2.60", "breakdown": [ … ] }
+```
+
+{% hint style="warning" %}
+A quote is a floor, not a cap. It prices the options you named. Three things add to it after the fact:
+
+- **Show defaults.** Passing `showId` applies that show's `images`, `clips`, `aiVideo` and music defaults when your call does not set them. A show that defaults to `images: "auto"` adds 25 credits per generated image.
+- **The director's choices.** With `images: "auto"` the engine generates an image for any scene that has no real still. Pass `images: "none"` or `"source"` to prevent generation.
+- **Music.** `music.generate: true` adds 40.
+
+To hold a price exactly, send your own `script` with `images: "none"` or `"source"`, name `clips` and `music` explicitly, and omit `showId` unless you want its defaults. There is no `maxCredits` parameter today.
+{% endhint %}
+
+## Balance and top-up without a browser
+
+```bash
+curl https://api.monkeygun.com/v1/billing/balance -H "Authorization: Bearer $MK_KEY"
+# { "credits": 440, "plan": "free", "usdPerCredit": 0.01 }
+
+curl -X POST https://api.monkeygun.com/v1/billing/topup -H "Authorization: Bearer $MK_KEY" -d '{ "amountUsd": 50 }'
+# { "url": "https://checkout.stripe.com/…" }
+```
+
+The Stripe link credits the account the key belongs to. For unattended systems, save a card once and turn on auto top-up under Settings → Credits.
+
+## Billing your own users
+
+One key runs a whole integration. Monkeygun bills your account; you bill your users however you like. tokenslop sells "slop credits" at a markup over the quoted cost, debits before calling `from-data`, and refunds from the `video.render_failed` webhook or its reconciler. See [the tokenslop example](../examples/tokenslop.md).
