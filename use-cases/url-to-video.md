@@ -12,7 +12,7 @@ Cut from a single URL about the Pokémon card artist Mitsuhiro Arita: facts, sti
 
 ```bash
 curl -X POST https://api.monkeygun.com/v1/sources -H "Authorization: Bearer $MK_KEY" \
-  -d '{ "url": "https://bulbapedia.bulbagarden.net/wiki/Mitsuhiro_Arita" }'
+  -d '{ "url": "https://en.wikipedia.org/wiki/Ken_Sugimori" }'
 ```
 
 ```json

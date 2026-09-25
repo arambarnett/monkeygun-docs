@@ -42,6 +42,7 @@
 
 ## Examples
 
+* [Runnable examples](examples/monkeygun-examples.md)
 * [tokenslop.fun](examples/tokenslop.md)
 * [nansen-shows](examples/nansen-shows.md)
 

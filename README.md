@@ -34,6 +34,8 @@ Three ways in, one engine underneath:
 
 ## Live examples
 
+* [Six runnable examples](examples/monkeygun-examples.md): exchange listing, yield rate split, portfolio recap with the embedded studio, your own footage indexed and cut, a weekly stocks brief, and URL to video. Each with a rendered sample and the script that made it.
+
 - [tokenslop.fun](https://tokenslop.fun) runs a feed of token videos on Robinhood Chain: house shows on a schedule, user-paid promos, and an embedded creator studio, all on this API. See [the tokenslop example](examples/tokenslop.md).
 - [nansen-shows](https://github.com/arambarnett/nansen-shows) is an open-source starter that turns Nansen smart-money data into seven authored shows. See [the Nansen example](examples/nansen-shows.md).
 
