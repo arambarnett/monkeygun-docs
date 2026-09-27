@@ -13,6 +13,18 @@ Financial and on-chain data is where the show kits are, but the engine is source
 | Pasted notes or a script | `POST /v1/sources { text }` or `from-data { script }` | create, render | [Authored scripts](../guides/authored-scripts.md) |
 | A Google Drive folder | `import_drive` | as footage | [Footage to video](../use-cases/footage-to-video.md) |
 
+## Worked examples
+
+Five shows built from public data, each with the payload, the call and the schedule:
+
+| Show | Data source | Page |
+|---|---|---|
+| Daily exchange movers | Kraken public ticker API | [Exchange movers desk](exchange-movers.md) |
+| Live contest bulletins every 12 hours | A contest referee's public feed | [Live contest desk](contest-desk.md) |
+| Standings and the race of the day | MLB Stats API | [Sports stat desk](sports-desk.md) |
+| Storms and warnings | NOAA National Hurricane Center | [Weather desk](weather-desk.md) |
+| One collectible a day | PriceCharting and TCGplayer | [Collectible price show](collectible-prices.md) |
+
 ## What you need set up, by use case
 
 <details>
@@ -42,6 +54,6 @@ Storage on your side is optional; upload by URL and Monkeygun keeps the file in 
 <details>
 <summary>Publishing</summary>
 
-Nothing, if you host the file. Connect Buffer in Settings → Publishing to autopost, or use `publish` with `destination: "share-link"` for a hosted page.
+Nothing, if you host the file. Connect Buffer in Settings → Publishing to autopost, or use `publish` with `destination: "share-link"` for a hosted page. See [Publishing](../guides/publishing.md).
 
 </details>

@@ -38,12 +38,15 @@ Fires for every finished render on your account: API, studio, embedded studio an
     "externalUserId": null,
     "channelId": null, "showId": null, "seriesId": null,
     "title": "$AI just listed",
+    "caption": "$AI traded $1.2M in its first 24 hours and is down 8.7% on the day.",
     "status": "rendered",
     "duration": 29.4,
     "version": 1,
     "url": "https://api.monkeygun.com/api/media/videos/vid-391/vid-391.mp4?k=cb66…",
     "renderUrl": "https://api.monkeygun.com/api/media/videos/vid-391/vid-391-v1.mp4?k=cb66…",
     "thumbnail": "https://api.monkeygun.com/api/media/videos/vid-391/vid-391-thumb.jpg?k=cb66…",
+    "webUrl": "https://api.monkeygun.com/api/media/videos/vid-391/vid-391-web.mp4?k=cb66…",
+    "posterUrl": "https://api.monkeygun.com/api/media/videos/vid-391/vid-391-thumb.jpg?k=cb66…",
     "watchUrl": "https://monkeygun.com/w/vid-391?k=cb66…",
     "mediaKey": "cb66914c20d5ae776c90",
     "error": null,
@@ -51,6 +54,8 @@ Fires for every finished render on your account: API, studio, embedded studio an
   }
 }
 ```
+
+`caption` is post text the designer wrote for this video (designed videos only; `null` otherwise). Its figures come from your data, like the voiceover. `webUrl` is a light 720p copy for feeds and autoplay; `posterUrl` is the same frame as `thumbnail`.
 
 On `video.render_failed`, `status` is `error`, `error` has the reason, `renderUrl` is null, and the render charge has been refunded. `externalUserId` is set for videos made in an [embedded studio](../guides/embedded-studio.md) session.
 {% endtab %}

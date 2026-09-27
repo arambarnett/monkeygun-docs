@@ -56,6 +56,11 @@
      "thumbnail": {
       "type": "string"
      },
+     "webUrl": {
+      "type": "string",
+      "nullable": true,
+      "description": "Light 720p copy for feeds and autoplay (~2\u20133 MB); null for videos rendered before Sep 27 2026"
+     },
      "watchUrl": {
       "type": "string",
       "description": "Hosted share page"
@@ -1114,6 +1119,14 @@
        "schema": {
         "type": "object",
         "properties": {
+         "engine": {
+          "type": "string",
+          "enum": [
+           "opus",
+           "director"
+          ],
+          "description": "'opus' (default for data, a page, a token or a brief): the designer writes the whole video \u2014 layout, motion, charts, voiceover \u2014 from the source pack's verbatim facts; pass sourcePackId/brief/format/targetSeconds and no script. 'director': your own script (footage edits, presenters, AI clips, music videos, shows)."
+         },
          "planId": {
           "type": "string",
           "description": "Make the video from a saved plan (after \"make it\"): the plan's script, settings and files are used; anything else you pass overrides. The script draft is not charged again."
@@ -3643,7 +3656,7 @@
            "adapter",
            "schedule"
           ],
-          "description": "page/rss = check on the cadence and make an episode ONLY when the source changed ('watch this page'); adapter = same, from an adapter spec you wrote (JSON API / CSV / structured page); schedule = make an episode EVERY run from the url, changed or not ('every weekday at 8am make one')"
+          "description": "page/rss = check on the cadence and make an episode ONLY when the source changed ('watch this page'); adapter = same, from an adapter spec you wrote (JSON API / CSV / structured page); schedule = make an episode EVERY run, changed or not ('every weekday at 8am make one') \u2014 from the url, or from the adapter when one is given (e.g. weekly prices); the first run makes an episode right away"
          },
          "url": {
           "type": "string",
@@ -3739,9 +3752,10 @@
           "enum": [
            "hold",
            "digest",
-           "autopost"
+           "autopost",
+           "review"
           ],
-          "description": ""
+          "description": "Omit to use the show's policy. review = an AI reviewer checks each render, then posts it (or holds it with the issues)"
          },
          "destination": {
           "type": "string",
@@ -3750,7 +3764,26 @@
            "download",
            "buffer"
           ],
-          "description": "Where autopost sends episodes (and what publish defaults to)"
+          "description": "Where autopost/review sends episodes (and what publish defaults to). YouTube, TikTok, Instagram etc. go through their Buffer channels"
+         },
+         "channelIds": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          },
+          "description": "Buffer channel ids for this series (default: the show's picks, else the account's selection)"
+         },
+         "tz": {
+          "type": "string",
+          "description": "IANA time zone for the schedule's clock times, e.g. 'America/New_York' (default: server time, UTC)"
+         },
+         "style": {
+          "type": "string",
+          "description": "Look for every episode (a style-bank id such as trading-terminal, tabloid, swiss-poster, breaking-news); omit for a varied pick"
+         },
+         "targetSeconds": {
+          "type": "number",
+          "description": "Episode length in seconds (default 30; each started 30s is one episode charge)"
          },
          "brief": {
           "type": "string",
@@ -4122,6 +4155,13 @@
          "caption": {
           "type": "string",
           "description": "Post text (buffer)"
+         },
+         "captions": {
+          "type": "object",
+          "additionalProperties": {
+           "type": "string"
+          },
+          "description": "Per-service post text, e.g. {\"instagram\": \"\u2026link in bio\", \"tiktok\": \"\u2026\"}; services without one use caption"
          },
          "autopost": {
           "type": "boolean",
@@ -5845,6 +5885,14 @@
        "schema": {
         "type": "object",
         "properties": {
+         "engine": {
+          "type": "string",
+          "enum": [
+           "opus",
+           "director"
+          ],
+          "description": "'opus' (default for data, a page, a token or a brief): the designer writes the whole video \u2014 layout, motion, charts, voiceover \u2014 from the source pack's verbatim facts; pass sourcePackId/brief/format/targetSeconds and no script. 'director': your own script (footage edits, presenters, AI clips, music videos, shows)."
+         },
          "planId": {
           "type": "string",
           "description": "Make the video from a saved plan (after \"make it\"): the plan's script, settings and files are used; anything else you pass overrides. The script draft is not charged again."
@@ -6760,6 +6808,13 @@
           "type": "string",
           "description": "Post text (buffer)"
          },
+         "captions": {
+          "type": "object",
+          "additionalProperties": {
+           "type": "string"
+          },
+          "description": "Per-service post text, e.g. {\"instagram\": \"\u2026link in bio\", \"tiktok\": \"\u2026\"}; services without one use caption"
+         },
          "autopost": {
           "type": "boolean",
           "description": "publish immediately instead of a draft"
@@ -6996,11 +7051,12 @@
           }
          },
          "voiceId": {
-          "type": "string"
+          "type": "string",
+          "description": "Narration voice: a house voice (list_voices) or a voice you cloned. Default: George (house)."
          },
          "language": {
           "type": "string",
-          "description": "Narration + on-screen language, e.g. \"Spanish\", \"pt-BR\""
+          "description": "Narration, on-screen text, title and caption language, e.g. \"Spanish\", \"Portuguese (Brazil)\", \"pt-BR\", \"Japanese\", \"Chinese (Simplified)\", \"Hindi\", \"Arabic\". Names, tickers and figures stay as written. Default English."
          },
          "voiceover": {
           "type": "boolean",

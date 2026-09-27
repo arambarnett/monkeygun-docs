@@ -25,6 +25,8 @@
 * [Embedded studio](guides/embedded-studio.md)
 * [Upload and brand pass](guides/upload-and-brand-pass.md)
 * [Scheduled shows](guides/scheduled-shows.md)
+* [Publishing](guides/publishing.md)
+* [Voices, languages and captions](guides/voices-languages-captions.md)
 
 ## Data schemas
 
@@ -40,6 +42,11 @@
 * [URL to video](use-cases/url-to-video.md)
 * [Footage to video](use-cases/footage-to-video.md)
 * [Other data feeds](use-cases/other-data.md)
+* [Exchange movers desk](use-cases/exchange-movers.md)
+* [Live contest desk](use-cases/contest-desk.md)
+* [Sports stat desk](use-cases/sports-desk.md)
+* [Weather desk](use-cases/weather-desk.md)
+* [Collectible price show](use-cases/collectible-prices.md)
 
 ## Examples
 

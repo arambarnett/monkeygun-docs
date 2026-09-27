@@ -33,6 +33,9 @@ Send `script` with scenes. The director is skipped entirely: no 150-second model
 | `brief` | string | Angle, audience, CTA in plain words. Keep under 600 characters when the director writes the script |
 | `cta` | string | Spoken and shown verbatim as the last scene |
 | `script` | object | Your own scenes. Skips the director |
+| `engine` | `opus` `director` | `opus` (the default with data, a page or a brief) designs the whole video from scratch; `director` uses templates. Scripts, shows, footage, clips and presenters always use `director` |
+| `style` | string | Designed videos: one of `trading-terminal`, `tabloid`, `nature-doc`, `hype-trailer`, `arcade`, `breaking-news`, `swiss-poster`, `comic`, `vaporwave`, `luxury-minimal`, `chaos-meme`. Omit for a varied pick |
+| `mode` | `story` | Designed videos: lead with a plot instead of the numbers |
 | `imageUrl` | string | Opening still (logo, hero) |
 | `sourceUrl` | string | A page to read for grounding when there is no `data` |
 | `format` | `9:16` `16:9` `1:1` `4:5` | Default `9:16` |
@@ -40,7 +43,7 @@ Send `script` with scenes. The director is skipped entirely: no 150-second model
 | `images` | `source` `none` `auto` `generate` | `source` = real stills only (default with data); `auto` = stills first, generate where nothing real exists (25 each); `generate` = a generated image on every visual scene; `none` = typography and data scenes only |
 | `brand` | object | See [Brand and packs](../concepts/brand-and-packs.md) |
 | `voiceId` | string | ElevenLabs voice id. `list_voices` returns the house voices and your clones |
-| `language` | string | Narration and on-screen language, e.g. `"Spanish"`, `"zh-CN"` |
+| `language` | string | Narration and on-screen language, e.g. `"Spanish"`, `"zh-CN"`. See [Voices, languages and captions](voices-languages-captions.md) |
 | `voiceover` | boolean | `false` = silent piece |
 | `captions` | boolean | Default true with a voiceover |
 | `pacing` | `calm` `standard` `fast` | Scene density |

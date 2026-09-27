@@ -15,6 +15,7 @@ Without one of these, a media path answers `401`.
 | Field | Path | Use it for |
 |---|---|---|
 | `renderUrl` | `/api/media/videos/{id}/{id}-v{N}.mp4?k=…` | Playback and caching. Immutable per version, served with a long cache lifetime, honours Range requests |
+| `webUrl` | `/api/media/videos/{id}/{id}-web.mp4?k=…` | A 720p copy of about 2–3 MB with fast start, for feeds and autoplay on phones. `null` for videos rendered before Sep 27 2026 |
 | `url` | `/api/media/videos/{id}/{id}.mp4?k=…` | "Latest cut". Mutable, revalidates. Changes after an edit and re-render |
 | `thumbnail` | `/api/media/videos/{id}/{id}-thumb.jpg?k=…` | Poster frame. Add `&t=<seconds>` to get a frame at a moment (generated once, then cached) |
 | `watchUrl` | `https://monkeygun.com/w/{id}?k=…` | A hosted share page with Open Graph tags for iMessage, X, Slack, Discord |
