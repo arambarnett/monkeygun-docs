@@ -27,6 +27,7 @@
 * [Connect your data](guides/connect-your-data.md)
 * [Scheduled shows](guides/scheduled-shows.md)
 * [Publishing](guides/publishing.md)
+* [Approval and brand lock](guides/approval-and-brand-lock.md)
 * [Voices, languages and captions](guides/voices-languages-captions.md)
 
 ## Data schemas
