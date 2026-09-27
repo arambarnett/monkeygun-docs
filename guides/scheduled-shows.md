@@ -57,7 +57,8 @@ curl -X POST https://api.monkeygun.com/v1/autopilot/start -H "Authorization: Bea
 | Route | What it does |
 |---|---|
 | `GET /autopilot/starters` | Ready-made sources with no URL needed: Pokémon card prices, top 10 crypto, top stock gainers, weather for a city, Hacker News |
-| `POST /autopilot/suggest` | `{ source: { kind, url } }` or `{ starter, city? }`. `kind` is `url`, `rss`, `json`, `csv` or `pricecharting` |
+| `POST /sources/preview` | Read a Google Sheet, CSV, JSON API (with an optional key header), feed, page or Dune query once and get a `sourceId`. See [Connect your data](connect-your-data.md) |
+| `POST /autopilot/suggest` | `{ sourceId }`, `{ source: { kind, url } }` or `{ starter, city? }`. `kind` is `url`, `rss`, `json`, `csv` or `pricecharting` |
 | `GET /autopilot/voices` | House voices, your cloned voices and the language list |
 | `POST /autopilot/start` | Creates the show and makes episode one right away |
 | `GET /autopilot` | Your shows, with cadence, policy, destinations, next run and the last five episodes |

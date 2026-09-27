@@ -24,6 +24,7 @@
 * [Authored scripts](guides/authored-scripts.md)
 * [Embedded studio](guides/embedded-studio.md)
 * [Upload and brand pass](guides/upload-and-brand-pass.md)
+* [Connect your data](guides/connect-your-data.md)
 * [Scheduled shows](guides/scheduled-shows.md)
 * [Publishing](guides/publishing.md)
 * [Voices, languages and captions](guides/voices-languages-captions.md)
