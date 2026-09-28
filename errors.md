@@ -3,14 +3,14 @@
 Every error is JSON with an error string. The HTTP status is derived from it.
 
 ```json
-{ "error": "insufficient_credits: this needs 160 credits, wallet has 40 (short 120). Point them to /pricing to top up." }
+{ "error": "insufficient_credits: this needs 160 credits, wallet has 40 (short 120). Tell them to add a card (it tops up $10 at a time, only when they run short) or buy credits in Settings → Credits." }
 ```
 
 | Status | When |
 |---|---|
 | `400` | Bad arguments. The `error` string says which |
 | `401` | Missing, revoked or wrong key. `{ "error": "unauthorized", "message": "Pass an API key…" }` |
-| `402` | `insufficient_credits: …` names the shortfall |
+| `402` | `insufficient_credits: …` names the shortfall: the wallet is short and there is no card on file (or pay-as-you-go is off). `payment_failed (card_declined \| authentication_required \| daily_cap): …` means pay-as-you-go tried and could not top up. Nothing was made or charged. Update the card in Settings → Credits. See [Card on file and pay-as-you-go](concepts/credits-and-quotes.md#card-on-file-and-pay-as-you-go) |
 | `404` | Unknown tool, video, job or asset; another account's job |
 | `413` | Upload over 250 MB |
 | `422` | Upload URL could not be fetched or had no media |

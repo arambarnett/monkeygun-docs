@@ -47,4 +47,4 @@ https://api.monkeygun.com/v1
 Authorization: Bearer mk_live_…
 ```
 
-Make a key in the studio under **Settings → Developer**. New accounts start with 500 credits. One credit is one cent. Every paid call returns `charged`.
+Make a key in the studio under **Settings → API**. New accounts start with 500 credits, plus 500 when you save a card. One credit is one cent. Every paid call returns `charged`. With a card on file, a call that runs short tops up $10 and goes through ([pay-as-you-go](concepts/credits-and-quotes.md#card-on-file-and-pay-as-you-go)).

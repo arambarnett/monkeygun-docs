@@ -2,7 +2,7 @@
 
 What things cost, what a quote does and does not promise, and how to keep a video at the price you planned.
 
-One credit is one cent. New accounts start with 500. Every paid call returns `charged`. Failed paid steps are refunded.
+One credit is one cent. New accounts start with 500, and saving a card adds 500 more. Every paid call returns `charged`. Failed paid steps are refunded.
 
 ## Price list
 
@@ -55,7 +55,21 @@ curl -X POST https://api.monkeygun.com/v1/billing/topup -H "Authorization: Beare
 # { "url": "https://checkout.stripe.com/…" }
 ```
 
-The Stripe link credits the account the key belongs to. For unattended systems, save a card once and turn on auto top-up under Settings → Credits.
+The Stripe link credits the account the key belongs to. For unattended systems, save a card once (below) and the account pays as it goes.
+
+## Card on file and pay-as-you-go
+
+Save a card once in the studio under **Settings → Credits → Add card**. Stripe's hosted page collects it; Monkeygun stores only the brand, last four digits and expiry. Nothing is charged when you save it, and the first card on an account adds **500 bonus credits** (once per account, and once per card).
+
+With a card on file, **pay-as-you-go** is on by default. When a call needs more credits than the wallet holds, Monkeygun charges the card for a top-up pack and the call goes through instead of answering `402`:
+
+- The pack is **$10 for 1,000 credits** (the list rate), or the pack size you pick under Settings → Credits. A call that is short by more than one pack is charged enough packs in one charge.
+- Automatic charges stop at **$50 per account per day**. Buying credits yourself is never capped.
+- It applies to the studio, the API, the MCP server and scheduled shows alike: they all spend the same credits.
+- Turn it off, change the pack or remove the card at any time under Settings → Credits. Every automatic charge appears there and in the usage ledger.
+- **Top up ahead of time** (optional) buys the same pack whenever the balance drops below a line you choose, so scheduled work never waits for a charge.
+
+If the card is declined, or the bank wants to confirm the charge, nothing is made or charged, the call answers `402` with `payment_failed`, and pay-as-you-go pauses until the card is updated. See [Errors](../errors.md).
 
 ## Billing your own users
 

@@ -2,6 +2,11 @@
 
 What changed in the API and the engine.
 
+## 2026-09-27 — Card on file and pay-as-you-go
+- **Save a card, get 500 credits.** Settings → Credits → Add card opens Stripe's hosted page. The first card on an account adds 500 bonus credits.
+- **Pay-as-you-go.** With a card on file, a call that runs short charges a $10 pack (or your chosen pack) and continues instead of answering `402`. Capped at $50 per account per day; on/off in Settings → Credits. Applies to API and MCP calls too.
+- **New 402 reason.** `payment_failed (card_declined | authentication_required | daily_cap)` when pay-as-you-go could not top up. Nothing is made or charged. See [Errors](errors.md).
+
 ## 2026-09-27 — Captions, web copies, voices and languages, publishing
 - **Post captions.** Designed videos now come with a `caption`: post text the designer wrote for that video. Its figures come from your data through the same slots as the voiceover, so the model cannot type a number. It is on video responses and on `video.rendered`, and scheduled shows without a money link post it (plus the source link). For a one-off `publish`, pass it as `caption`.
 - **Web copies.** Every render also makes a 720p copy of about 2–3 MB with fast start, for feeds and autoplay. It is `webUrl` on videos, jobs and `video.rendered`, which also carries `posterUrl`. Videos rendered before this date have `webUrl: null`.
