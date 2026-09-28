@@ -2,7 +2,7 @@
 
 What things cost, what a quote does and does not promise, and how to keep a video at the price you planned.
 
-One credit is one cent. New accounts start with 500, and saving a card adds 500 more. Every paid call returns `charged`. Failed paid steps are refunded.
+One credit is one cent. New accounts get a small allowance for planning and quotes; saving a card adds 500 credits for the first videos. Every paid call returns `charged`. Failed paid steps are refunded.
 
 ## Price list
 

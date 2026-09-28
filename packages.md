@@ -27,6 +27,6 @@ Pick by how much you want to build. Everything below is one account and one chan
 | Video API | Platform fee $3k to $15k per month by volume, plus credits at list. Pilot $10k to $25k fixed, 4 to 6 weeks, credits included. |
 | Feed + Creator Studio | Pilot $25k fixed, 4 to 6 weeks: feed and creation on 20 to 50 assets, two data shows, autopost, readout. After: platform fee, credits, share of attributed fees. |
 | Data Shows | Setup $3k to $10k one time. Then $15 to $20 per delivered video, or 10 / 30 / 60 videos a month at $1.5k / $3k / $5k. |
-| Self-serve | 500 free credits on signup, 500 more for saving a card, then pay-as-you-go at $10 a pack or top up any amount from $10. See [credits](concepts/credits-and-quotes.md). |
+| Self-serve | Planning is free; saving a card adds 500 credits (the first videos), then pay-as-you-go at $10 a pack or top up any amount from $10. See [credits](concepts/credits-and-quotes.md). |
 
 For a pilot, write to [aram@monkeygun.com](mailto:aram@monkeygun.com) with the data you have and the surface you want the videos on.

@@ -5,7 +5,7 @@ From a token snapshot to a playable video in one call.
 {% stepper %}
 {% step %}
 ### Get a key
-Sign in at [monkeygun.com](https://monkeygun.com/login), open **Settings → API**, and create a key. It looks like `mk_live_…` and is shown once. New accounts start with 500 credits, enough for about eight plain 30-second videos. Add a card for 500 more; with a card on file the account pays as it goes ($10 at a time, only when a call runs short), so an integration never stalls on a `402`.
+Sign in at [monkeygun.com](https://monkeygun.com/login), open **Settings → API**, and create a key. It looks like `mk_live_…` and is shown once. Add a card in **Settings → Credits** first: it adds 500 credits, enough for about eight plain 30-second videos, and after that tops up $10 at a time only when you run out. Add a card for 500 more; with a card on file the account pays as it goes ($10 at a time, only when a call runs short), so an integration never stalls on a `402`.
 
 ```bash
 export MK_KEY=mk_live_…

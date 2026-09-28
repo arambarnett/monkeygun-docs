@@ -3,6 +3,7 @@
 What changed in the API and the engine.
 
 ## 2026-09-27 — Card on file and pay-as-you-go
+- **Free credits change.** New accounts now get 50 credits, enough to plan and see a price. The daily free credits are off. Saving a card adds 500 credits for the first videos.
 - **Save a card, get 500 credits.** Settings → Credits → Add card opens Stripe's hosted page. The first card on an account adds 500 bonus credits.
 - **Pay-as-you-go.** With a card on file, a call that runs short charges a $10 pack (or your chosen pack) and continues instead of answering `402`. Capped at $50 per account per day; on/off in Settings → Credits. Applies to API and MCP calls too.
 - **New 402 reason.** `payment_failed (card_declined | authentication_required | daily_cap)` when pay-as-you-go could not top up. Nothing is made or charged. See [Errors](errors.md).
